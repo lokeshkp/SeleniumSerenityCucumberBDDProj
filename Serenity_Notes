@@ -1,0 +1,135 @@
+Serenity
+--------
+
+For serenity options make sure class should be extended by PageObject
+----------------------------------------------------------------
+sendkeys vs type :- (Intracting with Edit box)
+
+@FindBy (id ="username") private WebElementFacade username;
+@FindBy(id ="password") private WebElementFacade password;
+	
+	public void editBoxTest1(){
+		open();
+		username.sendKeys("test");
+		password.sendKeys("test");
+	}
+	
+	public void editBoxTest2() throws InterruptedException{
+		open();
+		username.type("tomsmith");
+		password.typeAndEnter("SuperSecretPassword!");
+		Thread.sleep(3000);
+	}
+	
+	public void editBoxTest3() throws InterruptedException{
+		open();
+		username.typeAndTab("tomsmith");
+		password.typeAndEnter("SuperSecretPassword!");
+		Thread.sleep(3000);
+	}
+
+----------------------------------------------------------------
+DropDown  :-  (Intracting with drop down)
+
+		Dropdown.forWebElement("dropdownId").select("option1");
+		
+		selectFromDropdown("dropdownId", "option1");
+		
+		getSelectedLabelFrom("dropdownId");
+
+----------------------------------------------------------------
+CheckBox  :-  (Intracting with CheckBox)
+
+		Checkbox checkbox = new Checkbox();
+		
+		checkbox.setChecked(true/false);
+
+		Checkbox checkbox = new Checkbox();
+		
+		checkbox.isChecked();
+		
+		setCheckbox("checkboxId",true)
+		
+----------------------------------------------------------------
+RadioButton   :-  (Intracting with RadioButton)
+
+	inRadioButtonGroup("groupId").getSelectedValue().get();
+
+----------------------------------------------------------------
+
+Intracting with Tables
+
+	List<Map<Object,String>> table = HtmlTable.rowsFrom("tableId) 								--> To read complete Table data
+	
+	List<WebElement> rowValues = filterRows("tableId", the("column_Name", endsWith("value")) 	--> To read particular(i.e condition) Table data
+	
+	for(WebElement e: rowValues){
+		Systeom.out.printlin(e.getText);
+	}
+
+	** need to import the following static libraray
+	import static net.thucydides.core.matchers.BeanMatchers.*;
+	import static net.thucydides.core.pages.component.HtmlTable*;
+	import static org.hamcrest.Matchers.*;
+
+
+	inTable("tableId").getHeadings();													--> To get all table all headings
+	
+	inTable("tableId").getRowElements();												--> To get all table all row elements
+	
+	inTable("tableId").getRowElementsWhere(the("column Heading", equalTo("value"));		--> To get all table all row elements
+	
+	withColumns("column1", "column2")
+	
+----------------------------------------------------------------
+
+Intracting with Implicit & Explict Wait
+
+	setImplicitTimeout(8,TimeUnit.SECONDS)
+	
+	@FindBy (id ="button") private WebElementFacade button;
+	
+	button.waitUntilClickable().click();
+
+	button.withTimeoutOf(10,TimeUnit.SECONDS).click();
+
+----------------------------------------------------------------
+
+Intracting with File Upload
+
+	open();
+	
+	String filePath = Sysytem.getProperty("user.dir")+File.seperator+"fileName.png";
+	
+	upload(filePath).to("webElement");
+	
+	
+
+----------------------------------------------------------------
+
+Intracting with Alerts & usage JavaScript in selenium
+
+	getAlert().accept();
+	getAlert().getText();
+	getAlert().dismiss();
+	getAlert().sendKeys("qualitest");
+	
+	
+	evaluateJavascript("document.querySelector(\"a[href='refId']\").click()");
+
+
+----------------------------------------------------------------
+
+Mouse Intractions
+	
+	withAction().moveToElement("elemntID/xpath").build().perform();
+	
+	waitForTextToAppear("name:text").findBy("xpath/id").click();
+	
+	withAction().dragAndDrop("srcID","targetID").build().perform();
+	
+	
+
+----------------------------------------------------------------
+
+Page Object Model
